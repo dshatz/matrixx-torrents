@@ -39,4 +39,5 @@ if __name__ == "__main__":
     new_release = find_new_release(entries)
     if new_release:
         print(f"New release found: {new_release}")
-        execute_remote_script(new_release)
+        command = f"bash ~/rss_script.sh {new_release}"
+        subprocess.run(command, shell=True)
