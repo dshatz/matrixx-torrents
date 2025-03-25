@@ -1,0 +1,4 @@
+pip~=24.0
+pillow~=11.0.0
+feedparser
+requests
