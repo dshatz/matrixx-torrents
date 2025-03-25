@@ -24,7 +24,7 @@ def find_new_release(entries):
 
 # Run remote command via SSH
 def run_remote_command(command):
-    ssh_command = f"ssh {REMOTE_USER}@{REMOTE_HOST} 'nohup {command} > ~/rss_script.log 2>&1 &'"
+    ssh_command = f"ssh {REMOTE_USER}@{REMOTE_HOST} -o StrictHostKeyChecking=no 'nohup {command} > ~/rss_script.log 2>&1 &'"
     subprocess.run(ssh_command, shell=True)
 
 
