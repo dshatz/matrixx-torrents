@@ -2,6 +2,7 @@ import feedparser
 import requests
 import os
 import subprocess
+from fileinput import filename
 from urllib.parse import urlencode
 
 # Configuration (Using GitHub Secrets)
@@ -45,5 +46,7 @@ if __name__ == "__main__":
         print(f"New release found: {new_release}")
         mirror_url = f"{new_release}?{urlencode(params)}"
         print(f"Mirror url {mirror_url}")
-        command = f"bash ~/rss_script.sh {new_release}?{urlencode(params)}"
+        filename = new_release.split('/download')[0].split(KEYWORD + '/')[1]
+        print(f"Filename {filename}")
+        command = f"bash ~/rss_script.sh {new_release}?{urlencode(params)} {filename}"
         subprocess.run(command, shell=True)
