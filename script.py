@@ -48,5 +48,5 @@ if __name__ == "__main__":
         print(f"Mirror url {mirror_url}")
         filename = new_release.split('/download')[0].split(KEYWORD + '/')[1]
         print(f"Filename {filename}")
-        command = f"bash ~/rss_script.sh {new_release}?{urlencode(params)} {filename}"
+        command = f"bash ~/rss_script.sh {new_release}?{urlencode(params)} \"{filename}\""
         subprocess.run(command, shell=True)
