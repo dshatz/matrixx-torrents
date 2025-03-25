@@ -35,12 +35,15 @@ def find_new_release(entries):
 # def execute_remote_script(url):
 #     run_remote_command(f"bash {REMOTE_SCRIPT_PATH} {url}")
 
+
+
 if __name__ == "__main__":
     entries = fetch_feed()
     new_release = find_new_release(entries)
-    with_mirror = new_release + f"?use_mirror=netcologne&r={urlencode(new_release)}"
+    params = {"use_mirror": "netcologne", "r": new_release}
     if new_release:
         print(f"New release found: {new_release}")
-        print(f"Using mirror: {with_mirror}")
-        command = f"bash ~/rss_script.sh {with_mirror}"
+        mirror_url = f"{new_release}?{urlencode(params)}"
+        print(f"Mirror url {mirror_url}")
+        command = f"bash ~/rss_script.sh {new_release}?{urlencode(params)}"
         subprocess.run(command, shell=True)
