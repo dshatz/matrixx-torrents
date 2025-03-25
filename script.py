@@ -8,7 +8,6 @@ RSS_FEED_URL = os.getenv("RSS_FEED_URL")
 KEYWORD = "lemonadep"
 REMOTE_HOST = os.getenv("REMOTE_HOST")
 REMOTE_USER = os.getenv("REMOTE_USER")
-SSH_KEY = os.getenv("SSH_KEY")
 REMOTE_SCRIPT_PATH = os.getenv("REMOTE_SCRIPT_PATH", "~/rss_script.sh")
 
 # Parse RSS feed
@@ -25,7 +24,7 @@ def find_new_release(entries):
 
 # Run remote command via SSH
 def run_remote_command(command):
-    ssh_command = f"ssh -i {SSH_KEY} {REMOTE_USER}@{REMOTE_HOST} 'nohup {command} > ~/rss_script.log 2>&1 &'"
+    ssh_command = f"ssh {REMOTE_USER}@{REMOTE_HOST} 'nohup {command} > ~/rss_script.log 2>&1 &'"
     subprocess.run(ssh_command, shell=True)
 
 
