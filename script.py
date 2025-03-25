@@ -18,7 +18,7 @@ def fetch_feed():
 # Find new lemonadep release
 def find_new_release(entries):
     for entry in entries:
-        if KEYWORD in entry.title.lower():
+        if "Official-" + KEYWORD in entry.title.lower():
             return entry.link
     return None
 
