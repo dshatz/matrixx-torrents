@@ -2,6 +2,7 @@ import feedparser
 import requests
 import os
 import subprocess
+from urllib.parse import urlencode
 
 # Configuration (Using GitHub Secrets)
 RSS_FEED_URL = "https://sourceforge.net/projects/projectmatrixx/rss?path=/"
@@ -37,7 +38,9 @@ def find_new_release(entries):
 if __name__ == "__main__":
     entries = fetch_feed()
     new_release = find_new_release(entries)
+    with_mirror = new_release + f"?use_mirror=netcologne&r={urlencode(new_release)}"
     if new_release:
         print(f"New release found: {new_release}")
-        command = f"bash ~/rss_script.sh {new_release}"
+        print(f"Using mirror: {with_mirror}")
+        command = f"bash ~/rss_script.sh {with_mirror}"
         subprocess.run(command, shell=True)
