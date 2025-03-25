@@ -24,15 +24,15 @@ def find_new_release(entries):
             return entry.link
     return None
 
-# Run remote command via SSH
-def run_remote_command(command):
-    ssh_command = f"ssh {REMOTE_USER}@{REMOTE_HOST} -o StrictHostKeyChecking=no 'nohup {command} > ~/rss_script.log 2>&1 &'"
-    subprocess.run(ssh_command, shell=True)
+# # Run remote command via SSH
+# def run_remote_command(command):
+#     ssh_command = f"ssh {REMOTE_USER}@{REMOTE_HOST} -o StrictHostKeyChecking=no 'nohup {command} > ~/rss_script.log 2>&1 &'"
+#     subprocess.run(ssh_command, shell=True)
 
 
 # Execute script on remote machine
-def execute_remote_script(url):
-    run_remote_command(f"bash {REMOTE_SCRIPT_PATH} {url}")
+# def execute_remote_script(url):
+#     run_remote_command(f"bash {REMOTE_SCRIPT_PATH} {url}")
 
 if __name__ == "__main__":
     entries = fetch_feed()
