@@ -1,0 +1,41 @@
+import feedparser
+import requests
+import os
+import subprocess
+
+# Configuration (Using GitHub Secrets)
+RSS_FEED_URL = os.getenv("RSS_FEED_URL")
+KEYWORD = "lemonadep"
+REMOTE_HOST = os.getenv("REMOTE_HOST")
+REMOTE_USER = os.getenv("REMOTE_USER")
+SSH_KEY = os.getenv("SSH_KEY")
+REMOTE_SCRIPT_PATH = os.getenv("REMOTE_SCRIPT_PATH", "~/rss_script.sh")
+
+# Parse RSS feed
+def fetch_feed():
+    feed = feedparser.parse(RSS_FEED_URL)
+    return feed.entries
+
+# Find new lemonadep release
+def find_new_release(entries):
+    for entry in entries:
+        if KEYWORD in entry.title.lower():
+            return entry.link
+    return None
+
+# Run remote command via SSH
+def run_remote_command(command):
+    ssh_command = f"ssh -i {SSH_KEY} {REMOTE_USER}@{REMOTE_HOST} 'nohup {command} > ~/rss_script.log 2>&1 &'"
+    subprocess.run(ssh_command, shell=True)
+
+
+# Execute script on remote machine
+def execute_remote_script(url):
+    run_remote_command(f"bash {REMOTE_SCRIPT_PATH} {url}")
+
+if __name__ == "__main__":
+    entries = fetch_feed()
+    new_release = find_new_release(entries)
+    if new_release:
+        print(f"New release found: {new_release}")
+        execute_remote_script(new_release)

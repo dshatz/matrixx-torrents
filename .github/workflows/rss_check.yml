@@ -1,0 +1,29 @@
+name: Check RSS Feed
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  check_feed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Run script on remote server
+        env:
+          RSS_FEED_URL: ${{ secrets.RSS_FEED_URL }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          REMOTE_SCRIPT_PATH: ${{ secrets.REMOTE_SCRIPT_PATH }}
+        run: python script.py
