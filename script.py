@@ -4,10 +4,10 @@ import os
 import subprocess
 
 # Configuration (Using GitHub Secrets)
-RSS_FEED_URL = os.getenv("RSS_FEED_URL")
+RSS_FEED_URL = "https://sourceforge.net/projects/projectmatrixx/rss?path=/"
 KEYWORD = "lemonadep"
-REMOTE_HOST = os.getenv("REMOTE_HOST")
-REMOTE_USER = os.getenv("REMOTE_USER")
+# REMOTE_HOST = os.getenv("REMOTE_HOST")
+# REMOTE_USER = os.getenv("REMOTE_USER")
 REMOTE_SCRIPT_PATH = os.getenv("REMOTE_SCRIPT_PATH", "~/rss_script.sh")
 
 # Parse RSS feed
